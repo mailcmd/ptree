@@ -23,3 +23,5 @@ prefix_tree-*.tar
 /tmp/
 
 /words.txt
+*~
+/lib/*~
