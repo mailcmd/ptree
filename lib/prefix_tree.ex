@@ -2,18 +2,26 @@ defmodule PTree do
   @moduledoc File.read!("README.md")
   
   defmodule Build do
+    @app_dir (
+      if File.cwd!() =~ "/deps/ptree" do
+        File.cwd!() <> "../../"
+      else
+        File.cwd!()
+      end
+     )
+    
     @builtin_words_list (
-      case File.read("#{File.cwd!()}/words.txt") do
+      case File.read("#{@app_dir}/words.txt") do
         {:ok, words} ->
           IO.puts("#{IO.ANSI.green_background()}#{IO.ANSI.black()}The builtin prefix tree was"<>
-                    " successfully built from #{File.cwd!()}/words.txt file.#{IO.ANSI.reset()}")
+                    " successfully built from #{@app_dir}/words.txt file.#{IO.ANSI.reset()}")
           words
           |> String.split("\n")
           |> Enum.map(&String.trim/1)
           |> Enum.filter(&(&1 != ""))
 
         _ ->
-          IO.puts("#{IO.ANSI.red_background()}No #{File.cwd!()}/words.txt file found. "
+          IO.puts("#{IO.ANSI.red_background()}No #{@app_dir}/words.txt file found. "
                  <> "Builtin prefix tree empty.#{IO.ANSI.reset()}")
           []
       end
