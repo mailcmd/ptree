@@ -4,7 +4,7 @@ defmodule PTree do
   defmodule Build do
     @app_dir (
       if File.cwd!() =~ "/deps/ptree" do
-        File.cwd!() <> "../../"
+        File.cwd!() <> "/../.."
       else
         File.cwd!()
       end
