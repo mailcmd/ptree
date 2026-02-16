@@ -9,6 +9,8 @@ defmodule PTree do
         File.cwd!()
       end
      )
+
+    @external_resource "#{@app_dir}/words.txt"
     
     @builtin_words_list (
       case File.read("#{@app_dir}/words.txt") do
