@@ -8,7 +8,7 @@ defmodule PTree do
       else
         File.cwd!()
       end
-     )
+     ) |> Path.expand()
 
     @external_resource "#{@app_dir}/words.txt"
     
