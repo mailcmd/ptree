@@ -1,0 +1,18 @@
+defmodule PrefixTree do
+  @moduledoc """
+  Documentation for `PrefixTree`.
+  """
+
+  @doc """
+  Hello world.
+
+  ## Examples
+
+      iex> PrefixTree.hello()
+      :world
+
+  """
+  def hello do
+    :world
+  end
+end
