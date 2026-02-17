@@ -1,4 +1,5 @@
 defmodule PTree do
+  @external_resource "README.md"
   @moduledoc File.read!("README.md")
   
   defmodule Build do
@@ -68,14 +69,38 @@ defmodule PTree do
   @spec get_builtin_ptree() :: Build.ptree
   def get_builtin_ptree(), do: @builtin_ptree
   
-  @spec search_words(prefix :: String.t()) :: Build.words
-  def search_words(prefix) do
-    search_words(@builtin_ptree, prefix)
-  end
-  @spec search_words(prefix_tree :: Build.ptree, prefix :: String.t()) :: Build.words
-  def search_words(ptree, prefix) do
+  # @spec search_words(prefix :: String.t(), opts :: list) :: Build.words
+  # def search_words(prefix, opts \\ []) do
+  #   search_words(, prefix, opts)
+  # end
+  @doc """
+  If you do not send ptree (second parameter) or it is `nil`, this function will use the builtin PTree.
+  
+  Options availables:  
+    - :sort -> return the words list ordered
+    - take: n -> return only the first n words
+  """
+  @spec search_words(prefix :: String.t(), prefix_tree :: Build.ptree, opts :: list()) :: Build.words
+  def search_words(prefix, ptree \\ nil, opts \\ [])
+  def search_words("", _ptree, _opts), do: []
+  def search_words(prefix, nil, opts),
+      do: search_words(prefix, @builtin_ptree, opts)
+  def search_words(prefix, opts, _) when is_list(opts),
+      do: search_words(prefix, @builtin_ptree, opts)
+  def search_words(prefix, ptree, opts) do
     ptree = search_subptree(ptree, prefix)
-    get_words(ptree)
+    words = get_words(ptree)
+    words =
+      if Enum.member?(opts, :sort) do
+        Enum.sort(words, fn a,b -> a < b end)
+      else
+        words
+      end
+    
+    case Keyword.get(opts, :take) do
+      nil -> words
+      n -> Enum.take(words, n)
+    end
   end
 
 
@@ -87,7 +112,7 @@ defmodule PTree do
     if ptree[<<l>>] do
       search_subptree(ptree[<<l>>], prefix)
     else
-      ptree[<<l>>]
+      nil
     end
   end
   

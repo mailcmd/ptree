@@ -13,8 +13,15 @@ iex> PTree.search_words("he") # Search in builtin PTree
 
 iex> ptree = PTree.Build.build_ptree(words_list) # Build a custom PTree from a words list
 
-iex> PTree.search_words(ptree, "he") # Search in a custom PTree
+iex> PTree.search_words("he", ptree) # Search in a custom PTree
 ```
+
+To see an example of use (working just in linux type OS with bash):
+```elixir 
+iex> PTree.Example.shell 
+```
+
+
 
 
 ## Installation
