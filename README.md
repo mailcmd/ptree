@@ -18,7 +18,7 @@ iex> PTree.search_words("he", ptree) # Search in a custom PTree
 
 To see an example of use (working just in linux type OS with bash):
 ```elixir 
-iex> PTree.Example.shell 
+iex> PTree.Example.writer
 ```
 
 
